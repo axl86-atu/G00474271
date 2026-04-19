@@ -8,6 +8,12 @@
 
 <ion-content [fullscreen]="true">
   <h2>Today's Trending Movies</h2>
+  <ion-item>
+    <ion-label>Search</ion-label>
+    <ion-input [(ngModel)] ="searchString" placeholder="   Movie Name"></ion-input>
+  </ion-item>
+  <ion-button expand="full" (click)="search()">SEARCH</ion-button> <!-- https://ionicframework.com/docs/api/button "full" makes the button stretch to the full width of the screen-->
+
   <ion-card *ngFor="let movie of movies"> <!-- Ionic card for formatting -->
     <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" />
     <ion-card-header>
