@@ -14,8 +14,7 @@
   </ion-item>
   <ion-button expand="full" (click)="search()">SEARCH</ion-button> <!-- https://ionicframework.com/docs/api/button "full" makes the button stretch to the full width of the screen-->
   <h2>{{ searchString.trim() === '' ? "Today's Trending Movies" : searchString + ' Movies' }}</h2> <!-- change/amend this as this causes issues when deleting the text-->
-
-  <ion-card *ngFor="let movie of movies"> <!-- Ionic card for formatting -->
+  <ion-card *ngFor="let movie of movies" (click)="selectedMovie(movie)"> <!-- Ionic card for formatting -->
     <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" />
     <ion-card-header>
       <ion-card-title>{{ movie.title }}</ion-card-title>

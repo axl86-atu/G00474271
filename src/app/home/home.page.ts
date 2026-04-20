@@ -4,6 +4,8 @@ import { MyHttpService } from '../services/my-http';
 import { HttpOptions } from '@capacitor/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MyDataService } from '../services/my-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +14,12 @@ import { FormsModule } from '@angular/forms';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, CommonModule, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, FormsModule],
 })
 export class HomePage {
-  //holds the list of movies displayed on the page
-  movies: any[] = [];
-
+  
+  movies: any[] = []; //holds the list of movies displayed on the page
   API_KEY = '806536462a0bda2adf6e3b5c2e6b1aed';
+  searchString: string = ''; //bound to the search input via [(ngModel)] to capture the user's input
 
-  // Bound to the search input via [(ngModel)] to capture the user's input
-  searchString: string = '';
-
-  constructor(private mhs: MyHttpService) {}
+  constructor(private mhs: MyHttpService, private router: Router, private mds: MyDataService) {}
 
   //runs each time the page becomes active, loads trending movies by default
   ionViewWillEnter() {
@@ -58,4 +57,8 @@ export class HomePage {
     //verifies the search results array
     console.log(this.movies);
   }
+
+  async selectedMovie(movie: any) {
+    await this.mds.set('selectedMovie', movie);
+    this.router.navigate(['/movie-details']);}
 }
