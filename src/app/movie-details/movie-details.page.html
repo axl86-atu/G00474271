@@ -8,4 +8,34 @@
   <h1>{{ movie.title }}</h1>
   <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" /> 
   <p>{{ movie.overview }}</p>
+
+
+<h2>Cast</h2>
+<ion-list>
+  <ion-item *ngFor="let person of cast">
+    <ion-avatar slot="start">
+      <img *ngIf="person.profile_path" src="https://image.tmdb.org/t/p/w200{{ person.profile_path }}" />
+        <p *ngIf="!person.profile_path">No image</p>
+    </ion-avatar>
+    <ion-label>
+      <h3>{{ person.character }}</h3>
+      <p>{{ person.name }}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+<h2>Crew</h2>
+<ion-list>
+  <ion-item *ngFor="let person of crew">
+    <ion-avatar slot="start">
+      <img *ngIf="person.profile_path" src="https://image.tmdb.org/t/p/w200{{ person.profile_path }}" />
+        <p *ngIf="!person.profile_path">No image</p>
+    </ion-avatar>
+    <ion-label>
+      <h3>{{ person.job }}</h3>
+      <p>{{ person.name }}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
 </ion-content>
