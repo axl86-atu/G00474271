@@ -9,6 +9,12 @@
   <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" /> 
   <p>{{ movie.overview }}</p>
 
+  <ion-button (click)="toggleFavourite()" *ngIf="!isFav">
+    Add To Favourites
+  </ion-button>
+  <ion-button (click)="toggleFavourite()" *ngIf="isFav">
+    Remove From Favourites
+  </ion-button>
 
 <h2>Cast</h2>
 <ion-list>

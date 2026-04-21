@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonAvatar, IonLabel } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonAvatar, IonLabel, IonButton } from '@ionic/angular/standalone';
 import { MyDataService } from '../services/my-data';
 import { MyHttpService } from '../services/my-http';
 import { HttpOptions } from '@capacitor/core';
@@ -11,13 +11,14 @@ import { HttpOptions } from '@capacitor/core';
   templateUrl: './movie-details.page.html',
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonAvatar, IonLabel]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonAvatar, IonLabel, IonButton]
 })
 export class MovieDetailsPage {
   movie:any = {}; //hold the movie object we read back from storage
   cast: any[] = [];
   crew: any[] = [];
   API_KEY = '806536462a0bda2adf6e3b5c2e6b1aed';
+  isFav: boolean = false;
 
   constructor(private mds: MyDataService, private mhs: MyHttpService) { 
 
@@ -32,6 +33,7 @@ export class MovieDetailsPage {
     this.movie = await this.mds.get('selectedMovie');
     console.log(this.movie); //checking if movie obj's been captured
     await this.loadCredits();
+    this.isFav = await this.mds.isFavourite(this.movie.id); //calling helper
   }
 
   async loadCredits() {
@@ -43,6 +45,16 @@ export class MovieDetailsPage {
     this.crew = result.data.crew;
     console.log('Cast:', this.cast);
     console.log('Crew:', this.crew);
+  }
+
+  async toggleFavourite() {
+    if (this.isFav) {
+      await this.mds.removeFavourite(this.movie.id);
+      this.isFav = false;
+    } else {
+      await this.mds.addFavourite(this.movie);
+      this.isFav = true;
+    }
   }
 
 }
