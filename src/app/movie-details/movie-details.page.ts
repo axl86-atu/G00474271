@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { MyDataService } from '../services/my-data';
 
 @Component({
   selector: 'app-movie-details',
@@ -10,11 +11,21 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
-export class MovieDetailsPage implements OnInit {
+export class MovieDetailsPage {
+  movie:any = {}; //hold the movie object we read back from storage
 
-  constructor() { }
+  constructor(private mds: MyDataService) { 
 
-  ngOnInit() {
+  }
+
+
+  ionViewWillEnter() {
+    this.loadMovie();
+  }
+  
+  async loadMovie() {
+    this.movie = await this.mds.get('selectedMovie');
+    console.log(this.movie); //checking if movie obj's been captured
   }
 
 }
