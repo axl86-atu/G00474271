@@ -14,6 +14,7 @@
 <ion-list>
   <ion-item *ngFor="let person of cast">
     <ion-avatar slot="start">
+              <!-- show image if profile_path exists, otherwise show "No image" -->
       <img *ngIf="person.profile_path" src="https://image.tmdb.org/t/p/w200{{ person.profile_path }}" />
         <p *ngIf="!person.profile_path">No image</p>
     </ion-avatar>
