@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonAvatar, IonLabel, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonAvatar, IonLabel, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { MyDataService } from '../services/my-data';
 import { MyHttpService } from '../services/my-http';
 import { HttpOptions } from '@capacitor/core';
+import { Router } from '@angular/router';
+import {addIcons} from 'ionicons';
+import {home, heart} from 'ionicons/icons';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.page.html',
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonAvatar, IonLabel, IonButton]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonAvatar, IonLabel, IonButton, IonButtons, IonIcon]
 })
 export class MovieDetailsPage {
   movie:any = {}; //hold the movie object we read back from storage
@@ -20,8 +23,8 @@ export class MovieDetailsPage {
   API_KEY = '806536462a0bda2adf6e3b5c2e6b1aed';
   isFav: boolean = false;
 
-  constructor(private mds: MyDataService, private mhs: MyHttpService) { 
-
+  constructor(private mds: MyDataService, private mhs: MyHttpService, private router: Router) { 
+    addIcons({ home, heart });
   }
 
 
@@ -55,6 +58,14 @@ export class MovieDetailsPage {
       await this.mds.addFavourite(this.movie);
       this.isFav = true;
     }
+  }
+
+  goHome() {
+    this.router.navigate(['/home']);
+  }
+  
+  goFavourites() {
+    this.router.navigate(['/favourites']);
   }
 
 }
