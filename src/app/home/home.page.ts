@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MyDataService } from '../services/my-data';
 import { Router } from '@angular/router';
+import {addIcons} from 'ionicons';
+import {heart} from 'ionicons/icons';  //https://ionicframework.com/docs/angular/build-options#standalone
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,9 @@ export class HomePage {
   API_KEY = '806536462a0bda2adf6e3b5c2e6b1aed';
   searchString: string = ''; //bound to the search input via [(ngModel)] to capture the user's input
 
-  constructor(private mhs: MyHttpService, private router: Router, private mds: MyDataService) {}
+  constructor(private mhs: MyHttpService, private router: Router, private mds: MyDataService) {
+    addIcons({ heart });
+  }
 
   //runs each time the page becomes active, loads trending movies by default
   ionViewWillEnter() {
