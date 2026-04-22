@@ -68,4 +68,10 @@ export class MovieDetailsPage {
     this.router.navigate(['/favourites']);
   }
 
+  async selectPerson(person: any) {
+    console.log('Saving person:', person);
+    await this.mds.set('selectedPerson', person);
+    this.router.navigate(['/details']);
+  }
+
 }
