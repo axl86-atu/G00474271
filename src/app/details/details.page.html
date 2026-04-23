@@ -20,9 +20,9 @@
   <!-- Name -->
   <h1>{{ person.name }}</h1>
 
-  <!-- Dates: only shown if birthday exists - and person death exists -->
+  <!-- Dates: only shown if birthday exists - and person death exists. Date formatting https://forum.ionicframework.com/t/formatting-date-time-for-display/60671/5 and https://docs.angularjs.org/api/ng/filter/date and https://stackoverflow.com/questions/47035327/ionic-date-pipe-and-local-date-->
   <p *ngIf="person.birthday">
-    {{ person.birthday }}<span *ngIf="person.deathday"> - {{ person.deathday }}</span>
+    {{ person.birthday | date: 'dd/MM/yyyy' }}<span *ngIf="person.deathday"> - {{ person.deathday| date: 'dd/MM/yyyy' }}</span>
   </p>
 
   <!-- Also Known As: only if there's at least one entry, safety check applied (could exist but empty)-->
