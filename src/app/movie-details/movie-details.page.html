@@ -18,9 +18,11 @@
   <p>{{ movie.overview }}</p>
 
   <ion-button (click)="toggleFavourite()" *ngIf="!isFav">
+    <ion-icon name="heart" slot="start"></ion-icon>
     Add To Favourites
   </ion-button>
-  <ion-button (click)="toggleFavourite()" *ngIf="isFav">
+  <ion-button fill="outline" (click)="toggleFavourite()" *ngIf="isFav"> <!-- https://ionicframework.com/docs/api/input for fill="outline" -->
+    <ion-icon name="heart-dislike" slot="start"></ion-icon>
     Remove From Favourites
   </ion-button>
 

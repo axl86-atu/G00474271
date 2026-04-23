@@ -7,7 +7,7 @@ import { MyHttpService } from '../services/my-http';
 import { HttpOptions } from '@capacitor/core';
 import { Router } from '@angular/router';
 import {addIcons} from 'ionicons';
-import {home, heart} from 'ionicons/icons';
+import {home, heart, heartDislike} from 'ionicons/icons';
 
 @Component({
   selector: 'app-movie-details',
@@ -24,7 +24,7 @@ export class MovieDetailsPage {
   isFav: boolean = false;
 
   constructor(private mds: MyDataService, private mhs: MyHttpService, private router: Router) { 
-    addIcons({ home, heart });
+    addIcons({ home, heart, heartDislike });
   }
 
 
