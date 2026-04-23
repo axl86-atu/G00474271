@@ -1,13 +1,47 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Details</ion-title>
+    <ion-title>{{ person.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+      <ion-button (click)="goFavourites()">
+        <ion-icon name="heart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Profile picture (or "No image" if not available) -->
+  <img *ngIf="person.profile_path" src="https://image.tmdb.org/t/p/w500{{ person.profile_path }}" />
+  <p *ngIf="!person.profile_path">No image</p>
+
+  <!-- Name -->
+  <h1>{{ person.name }}</h1>
+
+  <!-- Dates: only shown if birthday exists - and person death exists -->
+  <p *ngIf="person.birthday">
+    {{ person.birthday }}<span *ngIf="person.deathday"> - {{ person.deathday }}</span>
+  </p>
+
+  <!-- Also Known As: only if there's at least one entry, safety check applied (could exist but empty)-->
+  <p *ngIf="person.also_known_as && person.also_known_as.length > 0">
+    <strong>Also Known As:</strong> {{ person.also_known_as.join(', ') }}
+  </p>
+
+  <!-- Biography -->
+  <p>{{ person.biography }}</p>
+
+  <!-- Other movies -->
+  <h2>Other Movies</h2>
+  <ion-list>
+    <ion-item *ngFor="let movie of otherMovies" (click)="selectMovie(movie)">
+      <ion-avatar slot="start">
+        <img *ngIf="movie.poster_path" src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" />
+        <p *ngIf="!movie.poster_path">No image</p>
+      </ion-avatar>
+      <ion-label>{{ movie.title }}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
