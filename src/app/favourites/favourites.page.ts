@@ -5,7 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, Io
 import { MyDataService } from '../services/my-data';
 import { Router } from '@angular/router';
 import {addIcons} from 'ionicons';
-import {home} from 'ionicons/icons';
+import {home, trash} from 'ionicons/icons';
 
 @Component({
   selector: 'app-favourites',
@@ -18,7 +18,7 @@ export class FavouritesPage implements OnInit {
   favourites: any[] = [];
 
   constructor(private mds: MyDataService, private router: Router) { 
-    addIcons({ home });
+    addIcons({ home, trash });
   }
 
   ngOnInit() { }
@@ -35,6 +35,11 @@ export class FavouritesPage implements OnInit {
   async loadFavourites() {
     this.favourites = await this.mds.getFavourites();
     console.log(this.favourites);
+  }
+
+  async removeFromFavourites(movie: any) {
+    await this.mds.removeFavourite(movie.id);
+    this.favourites = await this.mds.getFavourites();
   }
 
   goHome() {
