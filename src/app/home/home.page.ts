@@ -30,6 +30,7 @@ export class HomePage {
   //runs each time the page becomes active, loads trending movies by default
   ionViewWillEnter() {
     this.getTrending();
+    this.searchString = '';
   }
 
   //fetches today's trending movies from the API
