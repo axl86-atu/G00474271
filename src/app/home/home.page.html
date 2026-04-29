@@ -17,7 +17,10 @@
     <ion-input [(ngModel)]="searchString" placeholder="Movie Name"></ion-input>
   </ion-item>
   <ion-button expand="full" (click)="search()">SEARCH</ion-button> <!-- https://ionicframework.com/docs/api/button "full" makes the button stretch to the full width of the screen-->
-  <h2>{{ heading }}</h2> <!-- amended instance-->
+  <h2 *ngIf="movies.length > 0">{{ heading }}</h2> <!-- amended instance-->
+  <div *ngIf="movies.length === 0 && searchString">
+    <h3>No movies found for "{{ searchString }}"</h3>
+  </div>
   <ion-card *ngFor="let movie of movies" (click)="selectedMovie(movie)"> <!-- Ionic card for formatting -->
     <img *ngIf="movie.poster_path" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" /> <!--same patter for no image applied in details-->
       <p *ngIf="!movie.poster_path">No image</p>
