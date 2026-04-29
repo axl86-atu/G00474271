@@ -14,7 +14,8 @@
     <h2>No favourites yet</h2>
   </div>
   <ion-card *ngFor="let movie of favourites">
-    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" />
+    <img *ngIf="movie.poster_path" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" /> <!--same pattern as in details for no image-->
+      <p *ngIf="!movie.poster_path">No image</p>
     <ion-card-header>
       <ion-card-title>{{ movie.title }}</ion-card-title>
     </ion-card-header>

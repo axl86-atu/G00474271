@@ -19,7 +19,8 @@
   <ion-button expand="full" (click)="search()">SEARCH</ion-button> <!-- https://ionicframework.com/docs/api/button "full" makes the button stretch to the full width of the screen-->
   <h2>{{ heading }}</h2> <!-- amended instance-->
   <ion-card *ngFor="let movie of movies" (click)="selectedMovie(movie)"> <!-- Ionic card for formatting -->
-    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" />
+    <img *ngIf="movie.poster_path" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" /> <!--same patter for no image applied in details-->
+      <p *ngIf="!movie.poster_path">No image</p>
     <ion-card-header>
       <ion-card-title>{{ movie.title }}</ion-card-title>
     </ion-card-header>
