@@ -24,6 +24,9 @@
   <p *ngIf="person.birthday">
     {{ person.birthday | date: 'dd/MM/yyyy' }}<span *ngIf="person.deathday"> - {{ person.deathday| date: 'dd/MM/yyyy' }}</span>
   </p>
+  <p *ngIf="person.place_of_birth">
+    Born in: {{ person.place_of_birth }}
+  </p>
 
   <!-- Also Known As: only if there's at least one entry, safety check applied (could exist but empty)-->
   <p *ngIf="person.also_known_as && person.also_known_as.length > 0">
