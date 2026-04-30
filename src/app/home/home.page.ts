@@ -65,8 +65,8 @@ export class HomePage {
     };
     let result = await this.mhs.get(options);
     this.movies = result.data.results;
-    //verifies the search results array
     this.loading = false;//stop spinner
+    //verifies the search results array
     console.log(this.movies);
   }
 

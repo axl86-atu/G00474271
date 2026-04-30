@@ -38,7 +38,7 @@
   <ion-list>
     <ion-item *ngFor="let movie of otherMovies" (click)="selectMovie(movie)">
       <ion-avatar slot="start">
-        <img *ngIf="movie.poster_path" src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" />
+        <img *ngIf="movie.poster_path" src="https://image.tmdb.org/t/p/w185{{ movie.poster_path }}" />
         <p *ngIf="!movie.poster_path">No image</p>
       </ion-avatar>
       <ion-label>{{ movie.title }}</ion-label>
