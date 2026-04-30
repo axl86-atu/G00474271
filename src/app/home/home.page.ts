@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonButtons, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { MyHttpService } from '../services/my-http';
 import { HttpOptions } from '@capacitor/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ import { heart } from 'ionicons/icons'; //https://ionicframework.com/docs/angula
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, CommonModule, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, FormsModule, IonButtons, IonIcon],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, CommonModule, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, FormsModule, IonButtons, IonIcon, IonSpinner],
 })
 export class HomePage {
 
@@ -22,6 +22,7 @@ export class HomePage {
   searchString: string = ''; //bound to the search input via [(ngModel)] to capture the user's input
   //heading shown above the movie list, updated only when getTrending or search runs
   heading: string = "Today's Trending Movies";
+  loading: boolean = false;
 
   constructor(private mhs: MyHttpService, private router: Router, private mds: MyDataService) {
     addIcons({ heart });
@@ -35,6 +36,7 @@ export class HomePage {
 
   //fetches today's trending movies from the API
   async getTrending() {
+    this.loading = true; //start spinner
     //reset the heading whenever trending is loaded
     this.heading = "Today's Trending Movies";
     let options: HttpOptions = {
@@ -44,6 +46,7 @@ export class HomePage {
     //result.data holds the JSON body, the array we need is inside .results
     this.movies = result.data.results;
     //verifies the movies array is populated correctly
+    this.loading = false;//stop spinner
     console.log(this.movies);
   }
 
@@ -54,6 +57,7 @@ export class HomePage {
       this.getTrending();
       return;
     }
+    this.loading = true; //start spinner
     //update the heading to reflect the actual search performed
     this.heading = this.searchString + ' Movies';
     let options: HttpOptions = {
@@ -62,6 +66,7 @@ export class HomePage {
     let result = await this.mhs.get(options);
     this.movies = result.data.results;
     //verifies the search results array
+    this.loading = false;//stop spinner
     console.log(this.movies);
   }
 
