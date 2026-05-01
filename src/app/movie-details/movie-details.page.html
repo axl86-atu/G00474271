@@ -18,6 +18,7 @@
     <p *ngIf="!movie.poster_path">No image</p>
   <p>{{ movie.overview }}</p>
 
+    <!-- only one of these two buttons is shown at a time, depending on whether the movie is already a favourite -->
   <ion-button (click)="toggleFavourite()" *ngIf="!isFav">
     <ion-icon name="heart" slot="start"></ion-icon>
     Add To Favourites

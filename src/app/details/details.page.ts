@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonIcon, IonButton, IonList, IonItem, IonAvatar, IonLabel } from '@ionic/angular/standalone';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonIcon, IonButton, IonList, IonItem, IonAvatar, IonLabel]
 })
-export class DetailsPage implements OnInit {
+export class DetailsPage {
 
   person: any = {};
   otherMovies: any[] = [];
@@ -22,17 +22,16 @@ export class DetailsPage implements OnInit {
 
   constructor(private mds: MyDataService, private mhs: MyHttpService, private router: Router) { }
 
-  ngOnInit() { }
 
   ionViewWillEnter() {
     this.loadPerson();
   }
-
+  //read the selected person from storage, then make two API calls one for their info, one for their movies
   async loadPerson() {
     let selected = await this.mds.get('selectedPerson');
-    console.log('Selected person from storage:', selected);
+    console.log('Selected person from storage:', selected); //checking
 
-    // Get full person info
+        //first API call gets the person's full info
     let infoOptions: HttpOptions = {
       url: 'https://api.themoviedb.org/3/person/' + selected.id + '?api_key=' + this.API_KEY
     };
@@ -40,7 +39,7 @@ export class DetailsPage implements OnInit {
     this.person = infoResult.data;
     console.log('Person info:', this.person);
 
-    // Get their movie credits
+    //second API call gets the list of movies the person was in
     let creditsOptions: HttpOptions = {
       url: 'https://api.themoviedb.org/3/person/' + selected.id + '/movie_credits?api_key=' + this.API_KEY
     };
@@ -48,7 +47,7 @@ export class DetailsPage implements OnInit {
     this.otherMovies = creditsResult.data.cast;
     console.log('Other movies:', this.otherMovies);
   }
-
+//save the chosen movie to storage and open the movie details page
   async selectMovie(movie: any) {
     await this.mds.set('selectedMovie', movie);
     this.router.navigate(['/movie-details']);

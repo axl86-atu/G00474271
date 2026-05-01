@@ -32,6 +32,7 @@ export class MovieDetailsPage {
     this.loadMovie();
   }
   
+  //read clicked movie from storage, and then fetching cast + crew 
   async loadMovie() {
     this.movie = await this.mds.get('selectedMovie');
     console.log(this.movie); //checking if movie obj's been captured
@@ -50,7 +51,7 @@ export class MovieDetailsPage {
     console.log('Crew:', this.crew);
   }
 
-  async toggleFavourite() {
+  async toggleFavourite() { //add or remove the movie from favourites depending on the current state
     if (this.isFav) {
       await this.mds.removeFavourite(this.movie.id);
       this.isFav = false;

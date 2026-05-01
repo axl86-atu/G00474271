@@ -11,24 +11,34 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
+
+  <!-- spinner shown while the API call is in progress -->
   <div *ngIf="loading">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Loading...</p>
   </div>
+
   <ion-item>
-    <ion-label slot="start" style="flex: 0 0 auto; margin-right: 16px;">Search</ion-label><!--Inline css to fix layout to keep the label and input on the same line with proper spacing- -->
+    <!-- inline flex styles keep the label and input on the same line with a gap between them -->
+    <ion-label slot="start" style="flex: 0 0 auto; margin-right: 16px;">Search</ion-label>
     <ion-input [(ngModel)]="searchString" placeholder="Movie Name"></ion-input>
   </ion-item>
-  <ion-button expand="full" (click)="search()">SEARCH</ion-button> <!-- https://ionicframework.com/docs/api/button "full" makes the button stretch to the full width of the screen-->
-  <h2 *ngIf="movies.length > 0">{{ heading }}</h2> <!-- amended instance-->
+
+  <ion-button expand="full" (click)="search()">SEARCH</ion-button>
+
+  <!-- heading is hidden when there are no results, the no result message takes over 1)load default one - 2)load updated one 3) if none, load no movies found one (below)-->
+  <h2 *ngIf="movies.length > 0">{{ heading }}</h2>
+
+  <!-- second condition prevents this message showing on first load before any search -->
   <div *ngIf="movies.length === 0 && searchString">
     <h3>No movies found for "{{ searchString }}"</h3>
   </div>
-  <ion-card *ngFor="let movie of movies" (click)="selectedMovie(movie)"> <!-- Ionic card for formatting -->
-    <img *ngIf="movie.poster_path" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" /> <!--same patter for no image applied in details-->
-      <p *ngIf="!movie.poster_path">No image</p>
+
+  <ion-card *ngFor="let movie of movies" (click)="selectedMovie(movie)">
+    <!-- show the poster if the API returned one, otherwise show "No image" -->
+    <img *ngIf="movie.poster_path" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" />
+    <p *ngIf="!movie.poster_path">No image</p>
     <ion-card-header>
       <ion-card-title>{{ movie.title }}</ion-card-title>
     </ion-card-header>
@@ -36,4 +46,5 @@
       {{ movie.overview }}
     </ion-card-content>
   </ion-card>
+
 </ion-content>
